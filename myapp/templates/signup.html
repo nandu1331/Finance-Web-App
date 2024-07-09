@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Signup Page</title>
+    <link rel="stylesheet" href="{% static 'css/signup_styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="form-container">
+                <div class="form-content">
+                    <h1>Create an account</h1>
+                    <p>Sign up to get started!</p>
+                    {% if error %}
+                        <p>{{ error }}</p>
+                    {% endif %}
+                    <form method="post" action="{% url 'signup' %}">
+                        {% csrf_token %}
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="**********" required>
+                        <label for="retype-password">Retype Password</label>
+                        <input type="password" id="retype-password" name="retype-password" placeholder="**********" required>
+                        <button type="submit">Sign up</button>
+                    </form>
+                    <div class="signup">
+                        <span>Already have an account?</span>
+                        <a href="{% url 'login' %}">Sign in</a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="{% static 'images/login_img.jpg' %}" alt="Responsive Image">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

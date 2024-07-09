@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Login Page</title>
+    <link rel="stylesheet" href="{% static 'css/login_styles.css' %}">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="form-container">
+                <div class="form-content">
+                    <h1>Welcome back</h1>
+                    <p>Welcome back! Please enter your details.</p>
+                    <form method="post" action="{% url 'login' %}" class="form-content">
+                        {% csrf_token %}
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="Enter your email" required>
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="**********" required>
+                        <div class="options">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember-me">
+                                <label for="remember-me">Remember me</label>
+                            </div>
+                            <a href="#">Forgot password</a>
+                        </div>
+                        <button type="submit">Sign in</button>
+                        <div id="google-signin">
+                            {% load socialaccount %}
+                            <a href="{% provider_login_url 'google' %}?next=/home" class="google-button">
+                                <img src="{% static 'images/google-logo.png' %}" alt="Google Icon" class="google-icon">
+                                Login with Google
+                            </a>
+                        </div>
+                        
+                    </form>
+                    <div class="signup">
+                        <span>Don’t have an account?</span>
+                        <a href="{% url 'signup' %}">Sign up for free!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="{% static 'images/login_img.jpg' %}" alt="Responsive Image">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
