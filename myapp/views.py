@@ -22,7 +22,9 @@ def login_view(request):
             return redirect('home')
         else:
             return render(request, 'login.html', {'error': 'Invalid email or password'})
-    return render(request, 'login.html')
+    else:
+        return render(request, 'login.html')
+
 
 def signup_view(request):
     if request.method == 'POST':
@@ -35,7 +37,7 @@ def signup_view(request):
         if password != password1:
             return render(request, 'signup.html', {'error': 'Passwords do not match'})
         user = User.objects.create_user(username=email, password=password)
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         return redirect('home')
     return render(request, 'signup.html')
 
@@ -64,7 +66,3 @@ def home_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
-
-def password_reset_view(request):
-    # Implement password reset logic here
-    pass

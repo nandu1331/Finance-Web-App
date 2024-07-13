@@ -15,6 +15,9 @@
                 <div class="form-content">
                     <h1>Welcome back</h1>
                     <p>Welcome back! Please enter your details.</p>
+                    {% if error %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% endif %}
                     <form method="post" action="{% url 'login' %}" class="form-content">
                         {% csrf_token %}
                         <label for="email">Email</label>
@@ -26,7 +29,7 @@
                                 <input type="checkbox" id="remember-me">
                                 <label for="remember-me">Remember me</label>
                             </div>
-                            <a href="#">Forgot password</a>
+                            <a href="{% url 'password_reset'%}">Forgot password</a>
                         </div>
                         <button type="submit">Sign in</button>
                         <div id="google-signin">
