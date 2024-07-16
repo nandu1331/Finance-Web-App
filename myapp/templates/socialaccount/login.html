@@ -1,0 +1,38 @@
+{% load socialaccount %}
+{% providers_media_js %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Account Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login_styles.css' %}">
+    <style>
+        .container {
+        display: flex;
+        min-height: 100vh;
+        background: url('/static/images/login_img.jpg') no-repeat center center;
+        background-size: cover; /* Ensure the image covers the whole background */
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="form-container">
+                <div class="form-content">
+                        <h2 style="margin: auto;">Processing</h2>
+                        <p>You are about to log in using Google.</p>
+                        <!-- This is the form that continues the login process -->
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit">Continue</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

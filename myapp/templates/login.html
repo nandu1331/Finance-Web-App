@@ -7,6 +7,22 @@
     <title>Responsive Login Page</title>
     <link rel="stylesheet" href="{% static 'css/login_styles.css' %}">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function googleSignOut() {
+            // Load the Google API library
+            gapi.load('auth2', function() {
+                var auth2 = gapi.auth2.getAuthInstance();
+                if (auth2) {
+                    auth2.signOut().then(function () {
+                        console.log('User signed out of Google.');
+                        window.location.href = "{% url 'logout' %}"; // Redirect to Django logout URL
+                    });
+                } else {
+                    window.location.href = "{% url 'logout' %}"; // If Google Auth instance doesn't exist, just logout
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -29,17 +45,16 @@
                                 <input type="checkbox" id="remember-me">
                                 <label for="remember-me">Remember me</label>
                             </div>
-                            <a href="{% url 'password_reset'%}">Forgot password</a>
+                            <a href="{% url 'password_reset' %}">Forgot password</a>
                         </div>
                         <button type="submit">Sign in</button>
                         <div id="google-signin">
                             {% load socialaccount %}
-                            <a href="{% provider_login_url 'google' %}?next=/home" class="google-button">
+                            <a href="{% url 'google_login' %}" class="google-button">
                                 <img src="{% static 'images/google-logo.png' %}" alt="Google Icon" class="google-icon">
                                 Login with Google
                             </a>
                         </div>
-                        
                     </form>
                     <div class="signup">
                         <span>Don’t have an account?</span>

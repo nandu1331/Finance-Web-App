@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -27,10 +26,9 @@ SECRET_KEY = 'django-insecure-za@(&biwgkk!low1j$r8k^f!669q3apagjrj9ymi%l7z(f06@*
 DEBUG = True
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = ''  # Replace 'home' with your desired redirect URL name
-LOGOUT_REDIRECT_URL = 'login'  # Optional, if you want to redirect to login after logout
-
-
+# Login and logout redirect URLs
+LOGIN_REDIRECT_URL = '/home'  # Set to your desired redirect URL after login
+LOGOUT_REDIRECT_URL = '/login'  # Set to your desired redirect URL after logout
 
 # Application definition
 SITE_ID = 2
@@ -51,12 +49,15 @@ INSTALLED_APPS = [
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "SCOPE":{
-            "profile",
-            "email"
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
         },
-        "AUTH_PARAMS":{"access_type":"online"}
+        'OAUTH_PKCE_ENABLED': True,  # Enable PKCE for OAuth2
     }
 }
 
@@ -76,7 +77,7 @@ ROOT_URLCONF = 'finance_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'myapp/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,6 +101,7 @@ STATIC_URL = '/static/'
 
 # Directory to collect static files into (useful for deployment)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -107,13 +109,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'finance_web_app',
-        'USER' : 'root',
+        'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -133,7 +134,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -144,7 +144,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -170,18 +169,15 @@ CSP_CONNECT_SRC = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend"
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-LOGIN_REDIRECT_URL = "/home"
-LOGOUT_REDIRECT_URL = "/login"
-
-#E-Mail Backend 
+# Email Backend
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = '1rn21ai035.nandakishore@gmail.com'
-EMAIL_HOST_PASSWORD = 'Funboi1971@'
-DEFAULT_FROM_EMAIL = '1rn21ai035.nandakishore@gmail.com'
+EMAIL_HOST_USER = 'nandamonsterking@gmail.com'
+EMAIL_HOST_PASSWORD = 'vwpk wvnr osnw xsbp'
+DEFAULT_FROM_EMAIL = 'nandamonsterking@gmail.com'
