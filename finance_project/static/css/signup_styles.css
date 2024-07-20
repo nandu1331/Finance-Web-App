@@ -11,7 +11,7 @@ body, html {
 .container {
     display: flex;
     min-height: 100vh;
-    background-color: #fff;
+    background: linear-gradient(90deg, #040610 15.72%, #031637 68.5%);
 }
 
 .content {
@@ -28,7 +28,7 @@ body, html {
     flex: 1;
     max-width: 450px;
     padding: 40px;
-    background-color: #fff;
+    background-color: #36454f;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-right: 20px;  /* Adding some space between the form and image */
@@ -42,19 +42,19 @@ body, html {
 
 .form-content h1 {
     font-size: 34px;
-    color: #030303;
+    color: #fbfafa;
     letter-spacing: 1.02px;
     text-transform: uppercase;
     text-align: center;
 }
 
 .form-content p {
-    color: #636364;
+    color: #a2a2b2;
     text-align: center;
 }
 
 .form-content label {
-    color: #181818;
+    color: #fbfafa;
     margin-top: 10px;
 }
 
@@ -72,7 +72,7 @@ body, html {
 .form-content button {
     padding: 15px;
     border-radius: 12px;
-    background-color: #ea454c;
+    background-color: #63e1e1;
     color: #fff;
     font-weight: 600;
     border: none;
@@ -90,9 +90,10 @@ body, html {
 }
 
 .signup a {
-    color: rgba(234, 69, 76, 1);
+    color: #63e1e1;
     margin-left: 5px;
 }
+
 
 /* Image container styles */
 .image-container {

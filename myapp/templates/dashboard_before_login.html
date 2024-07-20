@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wealth Manager Section</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hammersmith+One&display=swap" rel="stylesheet">
+    <style>
+      body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #100e19;
+    box-sizing: border-box;
+    height: 100%; /* Ensures the body takes full viewport height */
+    overflow-x: hidden;
+}
+
+.wealth-manager-section {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    min-height: 100vh; /* Adjusted to ensure the section fits the viewport height */
+    width: 100vw;
+    align-items: start;
+    padding: 56px 58px;
+    height: auto; /* Adjusted to allow content to determine height */
+}
+
+.background-image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.7);
+}
+
+.nav-buttons {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    font-size: 24px;
+    color: #000;
+    font-weight: 600;
+    line-height: 75%;
+    justify-content: space-between;
+    padding: 12px 15px 12px 0;
+    transition: transform 0.3s ease-in-out;
+}
+
+.login-button, .signup-button {
+    font-family: Poppins, sans-serif;
+    border-radius: 36px;
+    box-shadow: 0 0 20px 0 rgba(99, 225, 225, 0.25);
+    background-color: #6034bc;
+    justify-content: center;
+    padding: 24px 48px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.login-button a, .signup-button a {
+    text-decoration: none;
+    color: white;
+    font: poppins, arial;
+}
+
+.nav-buttons button:hover {
+    box-shadow: 0 0 20px 0 rgb(91, 55, 156);
+    transform: scale(1.1);
+}
+
+.hero-title {
+    position: relative;
+    color: #fff;
+    margin-top: 61px;
+    width: 100%; /* Adjusted to fit within the container width */
+    max-width: 684px; /* Ensure it doesn't exceed this width */
+    font: 400 64px/72px Hammersmith One, -apple-system, Roboto, Helvetica, sans-serif;
+}
+
+.hero-description {
+    position: relative;
+    color: #fff;
+    margin-top: 24px;
+    width: 100%; /* Adjusted to fit within the container width */
+    max-width: 568px; /* Ensure it doesn't exceed this width */
+    font: 400 26px Hammersmith One, sans-serif;
+}
+
+.cta-button {
+    position: relative;
+    border-radius: 16px;
+    background-color: #fff;
+    margin-top: 24px;
+    color: #100e19;
+    justify-content: center;
+    padding: 24px 48px;
+    font: 400 24px/75% Lato, sans-serif;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+.cta-button:hover {
+  transform: scale(1.05);
+}
+.features-container {
+    position: relative;
+    justify-content: center;
+    align-self: stretch;
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    backdrop-filter: blur(4px);
+    margin-top: 71px;
+    padding: 24px 56px;
+    width: 100%; /* Adjusted to fit within the container width */
+    box-sizing: border-box;
+    max-width: 90vw;
+}
+
+.features-grid {
+    gap: 20px;
+    display: flex;
+}
+
+.feature-column {
+    display: flex;
+    flex-direction: column;
+    line-height: normal;
+    width: 100%; /* Adjusted to fit within the container width */
+    max-width: 25%; /* Ensure it doesn't exceed this width */
+    margin-left: 0;
+}
+
+.feature-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    color: #fff;
+    font-weight: 400;
+    margin: auto 0;
+    font: roboto, arial;
+}
+
+.feature-icon {
+    aspect-ratio: 1;
+    object-fit: auto;
+    object-position: center;
+    width: 24px;
+}
+
+.feature-title {
+    margin-top: 8px;
+    font: 24px Habibi, sans-serif;
+}
+
+.feature-description {
+    margin-top: 8px;
+    font: 18px Habibi, sans-serif;
+}
+
+@media (max-width: 991px) {
+    .wealth-manager-section {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    .nav-buttons {
+        flex-wrap: wrap;
+        margin: auto;
+    }
+    .login-button, .signup-button {
+        padding: 10px 20px;
+        margin: auto;
+    }
+    .hero-title {
+        max-width: 100%;
+        margin-top: 40px;
+        font-size: 40px;
+        line-height: 50px;
+        text-align: center;
+    }
+    .hero-description {
+        max-width: 90vw;
+        text-align: center;
+    }
+    .cta-button {
+        padding: 10px 20px;
+        justify-content: center;
+        margin: auto;
+    }
+    .features-container {
+        max-width: 90vw;
+        margin-top: 40px;
+        padding: 0 20px;
+    }
+    .features-grid {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+    .feature-column {
+        width: 100%;
+        margin: auto;
+    }
+    .feature-item {
+        margin-top: 40px;
+        text-align: center;
+        max-width: 100vw;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <section class="wealth-manager-section">
+        <img src="{% static 'images/1104825.jpg' %}" alt="" class="background-image" />
+        <nav class="nav-buttons">
+            <button class="login-button"><a href="{% url 'login' %}" >Login</a></button>
+            <button class="signup-button"><a href="{% url 'signup' %}" >Sign Up</a></button>
+        </nav>
+        <h1 class="hero-title">Who's your <br /> wealth manager?</h1>
+        <p class="hero-description">We are a premier wealth management company dedicated to providing personalized financial planning, investment strategies, and comprehensive asset management services to help clients achieve their financial goals and secure their future.</p>
+        <button class="cta-button"><a href="{% url 'details_form' %}" style="text-decoration: none; color: black; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Get started</a></button>
+        <div class="features-container">
+            <div class="features-grid">
+                <article class="feature-column">
+                    <div class="feature-item">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7d2787651b850e437a2755a63ba51917a16b32e532aef639cfa0ec3b9c8986e6?apiKey=cbfea4622f4442b39741c68a93d4f6a5&" alt="Equity icon" class="feature-icon" />
+                        <h2 class="feature-title">Equity</h2>
+                        <p class="feature-description">Maximize returns with strategic equity investments tailored to your goals.</p>
+                    </div>
+                </article>
+                <article class="feature-column">
+                    <div class="feature-item">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/981ddbc39c013800fae837b5292071d96de69f8ad36258d33233199d4fc42234?apiKey=cbfea4622f4442b39741c68a93d4f6a5&" alt="Gold icon" class="feature-icon" />
+                        <h2 class="feature-title">Gold</h2>
+                        <p class="feature-description">Secure wealth with gold bonds, offering stability and long-term growth.</p>
+                    </div>
+                </article>
+                <article class="feature-column">
+                    <div class="feature-item">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7d4bf4b7921731a1ec32091fd4f7d23212542acca1a54ba37a377abddf3cfcf6?apiKey=cbfea4622f4442b39741c68a93d4f6a5&" alt="Fixed Deposit icon" class="feature-icon" />
+                        <h2 class="feature-title">Fixed Deposit</h2>
+                        <p class="feature-description">Guaranteed returns and safety with fixed deposit investments for stability.</p>
+                    </div>
+                </article>
+                <article class="feature-column">
+                    <div class="feature-item">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/f0e17c56f83b529ad03c7d48b3a3e90bfa88517c2fcff7119e04d49e79250266?apiKey=cbfea4622f4442b39741c68a93d4f6a5&" alt="Mutual Fund icon" class="feature-icon" />
+                        <h2 class="feature-title">Mutual Fund</h2>
+                        <p class="feature-description">Diversify your portfolio with mutual funds for balanced growth and security.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

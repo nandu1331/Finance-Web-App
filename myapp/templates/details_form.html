@@ -1,0 +1,356 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Profile Section</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Nunito, sans-serif;
+        background-color: #f0f2f5;
+    }
+    .profile-section {
+        background: linear-gradient(0deg, rgba(16, 14, 25, 0.2) 0%, rgba(16, 14, 25, 0.2) 100%), #031637;
+        display: flex;
+        flex-direction: column;
+        padding: 39px 58px;
+        position: relative;
+    }
+    .profile-container {
+        display: flex;
+        gap: 40px;
+    }
+    .form-column {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .form-wrapper {
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+    }
+    .header-container {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+    .avatar-container {
+        position: relative;
+        width: 180px;
+        height: 180px;
+        overflow: hidden;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .avatar-background {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .avatar-image {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 40%;
+        height: 40%;
+        object-fit: contain;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        padding: 5px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+    }
+    .avatar-image:hover {
+        transform: scale(1.1);
+    }
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        align-self: stretch;
+        color: #fff;
+        font-weight: 700;
+        margin: auto 0;
+    }
+    .user-email {
+        font: 28px Nunito, sans-serif;
+        margin-bottom: 10px;
+    }
+    .user-status {
+        font: 18px/1.4 Nunito, sans-serif;
+        opacity: 0.8;
+    }
+    .form-section {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .form-section-title {
+        color: #fff;
+        font: 700 24px Nunito, sans-serif;
+        margin-bottom: 25px;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 10px;
+    }
+    .form-row {
+        gap: 20px;
+        justify-content: space-between;
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .input-group {
+        gap: 20px;
+        display: flex;
+        width: 100%;
+    }
+    .input-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+    }
+    .input-label {
+        color: #fff;
+        font: 600 18px/1.2 Nunito, sans-serif;
+        margin-bottom: 8px;
+    }
+    .input-field {
+        align-items: start;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 12px;
+        font: 400 16px/1.5 Nunito, sans-serif;
+        width: 100%;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+    .input-field:focus {
+        outline: none;
+        border-color: #e4effd;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+    .input-field::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+    .image-column {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 200px;
+    }
+    .profile-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
+    }
+    .profile-image:hover {
+        transform: scale(1.05);
+    }
+    .submit-button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    .submit-button {
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        background-color: #e4effd;
+        color: #071a31;
+        text-align: center;
+        padding: 16px 32px;
+        font: 700 18px/1.2 Nunito, sans-serif;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .submit-button:hover {
+        background-color: #c4dffd;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 991px) {
+        .profile-section {
+            padding: 20px;
+        }
+        .profile-container {
+            flex-direction: column;
+        }
+        .form-column {
+            width: 100%;
+        }
+        .header-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .avatar-container {
+            margin-bottom: 20px;
+        }
+        .user-info {
+            margin-top: 20px;
+        }
+        .form-row, .input-group {
+            flex-direction: column;
+        }
+        .input-wrapper {
+            width: 100%;
+        }
+        .image-column {
+            position: static;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .profile-image {
+            max-width: 200px;
+            margin: 0 auto;
+            display: block;
+        }
+    }
+</style>
+</head>
+<body>
+<section class="profile-section">
+    <div class="profile-container">
+        <div class="form-column">
+            <div class="form-wrapper">
+                <header class="header-container">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="avatar-container">
+                            <img loading="lazy" src="{% if userprofile.image %}{{ userprofile.image.url }}{% else %}https://www.pngitem.com/pimgs/m/78-786293_1240-x-1240-0-avatar-profile-icon-png.png{% endif %}" class="avatar-background" alt="User avatar background" />
+                            <img loading="lazy" src="https://cdn0.iconfinder.com/data/icons/yellow-colored-set-3/512/man_with_camera-512.png" class="avatar-image" alt="Edit avatar" onclick="document.getElementById('profile-image-upload').click()" />
+                            <input type="file" id="profile-image-upload" style="display: none;" onchange="uploadProfileImage(event)" />
+                        </div>
+                    </form>
+                    <div class="user-info">
+                        <h2 class="user-email">{{ user.username }}</h2>
+                        <p class="user-status">Profile Details</p>
+                    </div>
+                </header>
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+                <form method="POST" action="{% url 'details_form' %}">
+                    {% csrf_token %}
+                    <div class="form-section">
+                        <h3 class="form-section-title">Personal Details</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <label for="name" class="input-label">Name</label>
+                                    <input type="text" id="name" class="input-field" placeholder="Enter your name" name="name" value="{{ userprofile.name }}" required/>
+                                </div>
+                                <div class="input-wrapper">
+                                    <label for="surname" class="input-label">Surname</label>
+                                    <input type="text" id="surname" class="input-field" placeholder="Enter your surname" name="surname" required value="{{ userprofile.surname}}"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <label for="dob" class="input-label">Date of Birth</label>
+                                    <input type="date" id="dob" class="input-field" value="{{ userprofile.dob|date:'Y-m-d'}}" name="dob" required />
+                                </div>
+                                <div class="input-wrapper">
+                                    <label for="mobile" class="input-label">Mobile No</label>
+                                    <input type="tel" id="mobile" class="input-field" placeholder="Enter your mobile number" value="{{ userprofile.mobile }}" name="mobile" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-section">
+                        <h3 class="form-section-title">Financial Details</h3>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <label for="fixed-income" class="input-label">Fixed Income</label>
+                                    <input type="number" id="fixed-income" class="input-field" placeholder="Enter fixed income" value="{{ userprofile.fixed_income }}" name="fixed-income" required />
+                                </div>
+                                <div class="input-wrapper">
+                                    <label for="variable-income" class="input-label">Variable Income</label>
+                                    <input type="number" id="variable-income" class="input-field" placeholder="Enter variable income" value="{{ userprofile.variable_income }}" name="variable-income" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <label for="profession" class="input-label">Profession</label>
+                                    <input type="text" id="profession" class="input-field" placeholder="Enter your profession" value="{{ userprofile.profession }}" name="profession" required />
+                                </div>
+                                <div class="input-wrapper">
+                                    <label for="insurance" class="input-label">Insurance</label>
+                                    <input type="text" id="insurance" class="input-field" placeholder="Enter insurance details" value="{{ userprofile.insurance }}" name="insurance" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <div class="input-wrapper">
+                                    <label for="savings" class="input-label">Savings for Investment</label>
+                                    <input type="number" id="savings" class="input-field" placeholder="Enter savings amount" value="{{ userprofile.savings }}" name="savings" required />
+                                </div>
+                                <div class="input-wrapper">
+                                    <label for="expenses" class="input-label">Fixed Expense</label>
+                                    <input type="number" id="expenses" class="input-field" placeholder="Enter fixed expenses" value="{{ userprofile.expenses }}" name="expenses" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-button-container">
+                        <button type="submit" class="submit-button">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="image-column">
+        <a href="{% url 'home' %}">
+            <img loading="lazy" src="{% static 'images/mm1.png' %}" class="profile-image" alt="Profile decoration" />
+        </a>
+    <!-- https://cdn.builder.io/api/v1/image/assets/TEMP/a85d55ff9317c8a01c44be377c99fcc5ee637bc1894282ba0abc90fb552f13c8?apiKey=cbfea4622f4442b39741c68a93d4f6a5&-->
+    </div>
+</section>
+<script>
+    function uploadProfileImage(event) {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('image', file);
+        fetch("{% url 'upload_profile_image' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('.avatar-background').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                alert('Image upload failed.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Image upload failed.');
+        });
+    }
+</script>
+</body>
+</html>

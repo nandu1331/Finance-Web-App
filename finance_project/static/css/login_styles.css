@@ -4,14 +4,14 @@ body, html {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f8f8;
+    background: linear-gradient(172deg,#040610 15.72%, #031637 68.5%);
 }
 
 /* Container styles */
 .container {
     display: flex;
     min-height: 100vh;
-    background-color: #fff;
+    background: linear-gradient(90deg, #040610 15.72%, #031637 68.5%);
 }
 
 .content {
@@ -28,9 +28,10 @@ body, html {
     flex: 1;
     max-width: 450px;
     padding: 40px;
-    background-color: #fff;
+    background: #36454f;
+
     border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(246, 244, 244, 0.1);
     margin-right: 20px;  /* Adding some space between the form and image */
 }
 
@@ -42,31 +43,32 @@ body, html {
 
 .form-content h1 {
     font-size: 34px;
-    color: #030303;
+    color: #faf7f7;
     letter-spacing: 1.02px;
     text-transform: uppercase;
     text-align: center;
 }
 
 .form-content p {
-    color: #636364;
+    color: #a2a2b2;
     text-align: center;
 }
 
 .form-content label {
-    color: #181818;
+    color: #f4efef;
     margin-top: 10px;
 }
 
 .form-content input {
     padding: 15px;
     border-radius: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(53, 82, 109, 0.463);
+    box-shadow: 0 4px 10px rgba(92, 114, 193, 0.29);
     margin-top: 5px;
     width: 100%;  /* Ensure inputs take full width of the container */
     margin-bottom: 20px;
     box-sizing: border-box;
+    background-color: #9bb3c3;
 }
 
 .options {
@@ -74,27 +76,32 @@ body, html {
     justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    color: #181818;
+    color: #f9f3f3;
 }
 
 .options .remember-me {
     display: flex;
     align-items: center;
     gap: 5px;
+    justify-content: center;
 }
 
 .form-content button {
     padding: 15px;
     border-radius: 12px;
-    background-color: #ea454c;
+    background-color: #63e1e1;
     color: #fff;
     font-weight: 600;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(233, 68, 75, 0.25);
+    box-shadow: 0 4px 10px rgba(32, 105, 132, 0.25);
     margin-top: 10px;
     width: 100%;
     box-sizing: border-box;
+}
+
+.form-content button:hover {
+    background-color: #519da9;
 }
 
 #google-signin {
@@ -106,7 +113,7 @@ body, html {
     align-items: center;
     justify-content: center;
     display: flex;
-    background-color: rgba(188, 184, 184, 0.633);
+    background-color: #63e1e1;
     color: white;
     padding: 15px;
     border: none;
@@ -121,7 +128,7 @@ body, html {
 }
 
 .google-button:hover {
-    background-color: rgba(234, 69, 76, 1);
+    background-color: #519da9;
 }
 
 .google-icon {
@@ -135,11 +142,11 @@ body, html {
 .signup {
     text-align: center;
     margin-top: 20px;
-    color: rgba(89, 89, 89, 1);
+    color: #fcfdfd;
 }
 
 .signup a {
-    color: rgba(234, 69, 76, 1);
+    color: #63e1e1;
     margin-left: 5px;
 }
 

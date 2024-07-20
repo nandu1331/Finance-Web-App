@@ -1,2 +1,260 @@
-<h1>Hi there!</h1>
-<a href="{% url 'logout' %}">Logout</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses Dashboard</title>
+    <style>
+        body, html {
+            background: #101010;
+        }
+        .expenses-dashboard { background-color: #101010; padding: 20px 20px 20px 80px; }
+        @media (max-width: 991px) { .expenses-dashboard { padding-left: 20px; } }
+        
+        .dashboard-layout { display: flex; gap: 20px; }
+        @media (max-width: 991px) { .dashboard-layout { flex-direction: column; align-items: stretch; gap: 0; } }
+        
+        .sidebar { display: flex; flex-direction: column; width: 15%; margin-left: 0; }
+        @media (max-width: 991px) { .sidebar { width: 100%; } }
+        
+        .user-profile { display: flex; margin-top: 45px; flex-direction: column; font: 600 25px/140% Poppins, sans-serif; color: #fff; }
+        @media (max-width: 991px) { .user-profile { margin-top: 40px; } }
+        
+        .profile-picture { position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; }
+        
+        .username { margin-top: 26px; font: 30px/117% Poppins, sans-serif; margin-left: 50px;}
+        
+        .user-email { margin-top: 15px; font: 400 17px/159% Poppins, sans-serif; margin-left: -50px;}
+        
+        .nav-item { font: 600 25px/140% Poppins, sans-serif; margin-top: 40px; }
+        
+        .main-content { display: flex; flex-direction: column; width: 85%; margin-left: 20px; }
+        @media (max-width: 991px) { .main-content { width: 100%; } }
+        
+        .content-wrapper { border-radius: 30px; background-color: #fff; flex-grow: 1; padding-left: 80px; width: 100%; }
+        @media (max-width: 991px) { .content-wrapper { max-width: 100%; margin-top: 40px; } }
+        
+        .content-layout { display: flex; gap: 20px; }
+        @media (max-width: 991px) { .content-layout { flex-direction: column; align-items: stretch; gap: 0; } }
+        
+        .expenses-section { display: flex; flex-direction: column; width: 59%; margin-left: 0; }
+        @media (max-width: 991px) { .expenses-section { width: 100%; } }
+        
+        .expenses-header { display: flex; justify-content: space-between; align-items: center; }
+        @media (max-width: 991px) { .expenses-header { max-width: 100%; flex-wrap: wrap; } }
+        
+        .header-text { display: flex; flex-direction: column; }
+        
+        .expenses-title { color: #262a41; letter-spacing: 0.67px; font: 600 40px Poppins, sans-serif; }
+        
+        .expenses-date { color: #101010; letter-spacing: 0.34px; margin-top: 16px; font: 400 16px Poppins, sans-serif; }
+        
+        .header-icon { aspect-ratio: 4; object-fit: auto; object-position: center; width: 123px; align-self: start; max-width: 100%; }
+        
+        .expenses-chart { aspect-ratio: 8.33; object-fit: auto; object-position: center; width: 510px; align-self: center; margin-top: 50px; }
+        @media (max-width: 991px) { .expenses-chart { max-width: 100%; margin-top: 40px; } }
+        
+        .expenses-list { margin-top: 54px; }
+        @media (max-width: 991px) { .expenses-list { max-width: 100%; margin-top: 40px; } }
+        
+        .expenses-layout { display: flex; gap: 20px; }
+        @media (max-width: 991px) { .expenses-layout { flex-direction: column; align-items: stretch; gap: 0; } }
+        
+        .expenses-items { display: flex; flex-grow: 1; flex-direction: column; width: 84%; margin-left: 0; }
+        @media (max-width: 991px) { .expenses-items { width: 100%; margin-top: 40px; } }
+        
+        .expense-date { color: #262a41; letter-spacing: 0.3px; font: 400 18px/167% AvenirNext, sans-serif; }
+        
+        .expense-item { display: flex; margin-top: 25px; gap: 17px; }
+        
+        .expense-icon { aspect-ratio: 1; object-fit: auto; object-position: center; width: 48px; }
+        
+        .expense-details { align-self: start; display: flex; margin-top: 6px; flex-direction: column; }
+        
+        .expense-category { color: #273240; letter-spacing: 0.34px; font: 500 16px Poppins, sans-serif; }
+        
+        .expense-description { color: #404852; letter-spacing: 0.5px; margin-top: 10px; font: 400 14px Poppins, sans-serif; }
+        
+        .expenses-amounts { display: flex; margin-top: 6px; flex-direction: column; font: 600 16px Poppins, sans-serif; color: #273240; text-align: right; letter-spacing: 0.34px; width: 16%; margin-left: 20px; }
+        @media (max-width: 991px) { .expenses-amounts { width: 100%; margin-top: 40px; } }
+        
+        .amount-icon { aspect-ratio: 5; object-fit: auto; object-position: center; width: 25px; align-self: end; }
+        
+        .amount { margin-top: 40px; }
+        
+        .sidebar-content { border-radius: 0; background-color: #f9fafc; display: flex; width: 100%; flex-grow: 1; flex-direction: column; margin: 0 auto; padding: 70px 50px; }
+        @media (max-width: 991px) { .sidebar-content { margin-top: 40px; padding: 0 20px; } }
+        
+        .sidebar-title { color: #262a41; letter-spacing: 0.33px; font: 400 20px/150% AvenirNext, sans-serif; }
+        
+        .expense-category-item { display: flex; margin-top: 37px; gap: 20px; font: 500 13px/185% Poppins, sans-serif; color: #273240; letter-spacing: 0.46px; justify-content: space-between; }
+        
+        .category-name { font-weight: 500; }
+        
+        .category-amount { text-align: right; font-weight: 400; }
+        
+        .progress-bar { border-radius: 5px; background-color: #eceff5; display: flex; margin-top: 11px; flex-direction: column; justify-content: center; }
+        
+        .progress-fill { border-radius: 5px; background-color: #31ba96; height: 5px; }
+        
+        .savings-tip { border-radius: 15px; background-color: #edf0f6; display: flex; margin-top: 101px; width: 100%; flex-direction: column; padding: 0 25px 25px; }
+        @media (max-width: 991px) { .savings-tip { margin-top: 40px; padding: 0 20px; } }
+        
+        .tip-icons { z-index: 10; display: flex; margin-top: -34px; gap: 20px; justify-content: space-between; }
+        
+        .tip-icon-left { aspect-ratio: 1.16; object-fit: auto; object-position: center; width: 84px; align-self: start; margin-top: 19px; }
+        
+        .tip-icon-right { aspect-ratio: 0.59; object-fit: auto; object-position: center; width: 53px; }
+        
+        .tip-title { color: #273240; letter-spacing: 0.34px; margin-top: 27px; font: 600 16px Poppins, sans-serif; }
+        
+        .tip-description { color: #404852; letter-spacing: 0.43px; margin-top: 12px; font: 400 12px/21px Poppins, sans-serif; }
+        
+        .tip-button { border-radius: 8px; background-color: #101010; margin-top: 26px; color: #fff; letter-spacing: 1.5px; justify-content: center; padding: 18px 60px; font: 600 13px Poppins, sans-serif; }
+        @media (max-width: 991px) { .tip-button { padding: 0 24px 0 22px; } }
+        </style>
+</head>
+<body>
+    <section class="expenses-dashboard">
+        <div class="dashboard-layout">
+          <aside class="sidebar">
+            <div class="user-profile">
+              <img src="{{ profile.image.url }}" alt="User profile picture" class="profile-picture" />
+              <h2 class="username">{{ profile.name }}</h2>
+              <p class="user-email">{{ user.username }}</p>
+              <nav>
+                <ul>
+                  <li class="nav-item">Dashboard</li>
+                  <li class="nav-item">Expenses</li>
+                  <li class="nav-item">Wallets</li>
+                  <li class="nav-item">Summary</li>
+                  <li class="nav-item">Accounts</li>
+                  <li class="nav-item">Settings</li>
+                </ul>
+              </nav>
+            </div>
+          </aside>
+          <main class="main-content">
+            <div class="content-wrapper">
+              <div class="content-layout">
+                <section class="expenses-section">
+                  <header class="expenses-header">
+                    <div class="header-text">
+                      <h1 class="expenses-title">Expenses</h1>
+                      <p class="expenses-date">01 - 25 March, 2020</p>
+                    </div>
+                    <!--<img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a7e5aff5d3ff23b37abae0ac3233df69a9f88a53d0f7c0f81fc4601a64322818?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Expenses icon" class="header-icon" />-->
+                  </header>
+                  <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7828f9828a0665dcbbc753ef69b3be2ba7105914e9b9c58c0f22359bf7246524?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Expenses chart" class="expenses-chart" />
+                  <div class="expenses-list">
+                    <div class="expenses-layout">
+                      <div class="expenses-items">
+                        <h3 class="expense-date">Today</h3>
+                        <div class="expense-item">
+                          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/788be02310a788361d7f2052f994ccfe7f4519b49463667de46049fe7063cdc4?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Grocery icon" class="expense-icon" />
+                          <div class="expense-details">
+                            <h4 class="expense-category">Grocery</h4>
+                            <p class="expense-description">5:12 pm • Belanja di pasar</p>
+                          </div>
+                        </div>
+                        <div class="expense-item">
+                          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/0f05fda9df7128a3aef111a31078fe024f6c9013fcf10bf9c6586e5355fa1c9d?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Transportation icon" class="expense-icon" />
+                          <div class="expense-details">
+                            <h4 class="expense-category">Transportation</h4>
+                            <p class="expense-description">5:12 pm • Naik bus umum</p>
+                          </div>
+                        </div>
+                        <div class="expense-item">
+                          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/ef7fa8b2cd39093a7758b568ddfbf819ba700145e21ab08ae5653a3d6fbe0af7?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Housing icon" class="expense-icon" />
+                          <div class="expense-details">
+                            <h4 class="expense-category">Housing</h4>
+                            <p class="expense-description">5:12 pm • Bayar Listrik</p>
+                          </div>
+                        </div>
+                        <h3 class="expense-date">Monday, 23 March 2020</h3>
+                        <div class="expense-item">
+                          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/47d758dafd688a3683fbed10b6253d2a20ced73f1157d99ba1626c8f7209dfe0?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Food and Drink icon" class="expense-icon" />
+                          <div class="expense-details">
+                            <h4 class="expense-category">Food and Drink</h4>
+                            <p class="expense-description">5:12 pm • Makan Steak</p>
+                          </div>
+                        </div>
+                        <div class="expense-item">
+                          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/1891006e39ee01be8bc048b5b86c75de85e9964247dc2f753babde769afffb6d?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Entertainment icon" class="expense-icon" />
+                          <div class="expense-details">
+                            <h4 class="expense-category">Entertainment</h4>
+                            <p class="expense-description">5:12 pm • Nonton Bioskop</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="expenses-amounts">
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7e83220d25f4410076799d71ab85467321f8b5374ad458401f01cda04caadd03?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Currency icon" class="amount-icon" />
+                        <p class="amount">-326.800</p>
+                        <p class="amount">-15.000</p>
+                        <p class="amount">-185.750</p>
+                        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7e83220d25f4410076799d71ab85467321f8b5374ad458401f01cda04caadd03?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Currency icon" class="amount-icon" />
+                        <p class="amount">-156.000</p>
+                        <p class="amount">-35.200</p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <aside class="sidebar-content">
+                  <h2 class="sidebar-title">Where your money go?</h2>
+                  <div class="expense-category-item">
+                    <span class="category-name">Food and Drinks</span>
+                    <span class="category-amount">872.400</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 80%;"></div>
+                  </div>
+                  <div class="expense-category-item">
+                    <span class="category-name">Shopping</span>
+                    <span class="category-amount">1.378.200</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 60%;"></div>
+                  </div>
+                  <div class="expense-category-item">
+                    <span class="category-name">Housing</span>
+                    <span class="category-amount">928.500</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 70%;"></div>
+                  </div>
+                  <div class="expense-category-item">
+                    <span class="category-name">Transportation</span>
+                    <span class="category-amount">420.700</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 40%;"></div>
+                  </div>
+                  <div class="expense-category-item">
+                    <span class="category-name">Vehicle</span>
+                    <span class="category-amount">520.000</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%;"></div>
+                  </div>
+                  <div class="savings-tip">
+                    <div class="tip-icons">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/e322e44e007117927441ee60f0d5a0beb5d36970c1400a1a5de26606a1d12a77?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Savings tip icon left" class="tip-icon-left" />
+                      <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/666d084afea2cbcb52b976f17a00fc47ac718c8ab636c42bc83a83a43200be5b?apiKey=cde7e7547a684a3987bb76406156bbc5&" alt="Savings tip icon right" class="tip-icon-right" />
+                    </div>
+                    <h3 class="tip-title">Save more money</h3>
+                    <p class="tip-description">eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
+                    <button class="tip-button">VIEW TIPS</button>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </main>
+        </div>
+      </section>
+</body>
+</html>

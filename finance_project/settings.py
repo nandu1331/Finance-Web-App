@@ -181,3 +181,25 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'nandamonsterking@gmail.com'
 EMAIL_HOST_PASSWORD = 'vwpk wvnr osnw xsbp'
 DEFAULT_FROM_EMAIL = 'nandamonsterking@gmail.com'
+
+# Set the session cookie name
+SESSION_COOKIE_NAME = 'finance_session_id'
+
+# Use the database backend for sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Set the session cookie age to 2 weeks (in seconds)
+SESSION_COOKIE_AGE = 1209600  # 2 weeks
+
+# Ensure the session cookie is secure if using HTTPS
+SESSION_COOKIE_SECURE = True
+
+# Expire the session when the browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Save the session to the database on every request
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_SAMESITE = 'Strict'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
