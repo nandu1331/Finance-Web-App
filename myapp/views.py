@@ -8,6 +8,13 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 import json
 from django.core.files.base import ContentFile
+from django.db import IntegrityError
+import yfinance as yf
+from myapp.models import Companies
+from django.contrib import messages
+from lstm.RunModel import RunModel
+from datetime import date, timedelta
+from GoogleNews import GoogleNews
 
 # Replace with your actual client ID
 GOOGLE_CLIENT_ID = '361382531750-m65ekgq6bhlo654o4d1mpbnjuf6vlnqq.apps.googleusercontent.com'
@@ -246,7 +253,80 @@ def all_expenses(request):
 def expenses_summary(request):
     return render(request, 'expenses_summary.html')
 
+def Stock_prediction(request):
+    # news data
+    googlenews = GoogleNews(lang='en', period='12h', encode='utf-8')
+    googlenews.get_news('National Stock Exchange')
+    news = googlenews.result(sort=True)
+    news_first = news[:8]
+    news_length = []
+    for i in range(1, len(news)//8):
+        news_length.append(news[i*8:(i*8)+8])
 
+    # chart data
+    companies = Companies.objects.all()
+    # Define the symbol for NIFTY index
+    symbol = '^NSEI'  # '^NSEI' is the symbol for NIFTY 50 index on Yahoo Finance
+
+    # Define the date range
+    end_date = date.today()
+    start_date = end_date - timedelta(days=30)
+
+# Fetch historical data for NIFTY index
+    data = yf.download(symbol, start=start_date, end=end_date)
+    print(data)
+    labels = data._data.axes[1].tolist()
+
+    context = {
+        'companies': companies,
+        'labels': labels,
+        'data': data['Close'].tolist(),
+        'news': news,
+        'news_length': news_length,
+    }
+
+    
+    
+
+    if request.POST.get('option'):
+
+        pk = request.POST['option']
+        company = Companies.get_company_by_id(pk)
+        print(company.name)
+
+        print(company.symbol)
+        obj = RunModel(company)
+
+        company_symbol = company.symbol  # Replace with company.symbol if company is an object
+
+# Define the date range
+        end_date = date.today()
+        start_date = end_date - timedelta(days=30)
+
+# Fetch historical data for the company's stock
+        current_data = yf.download(company_symbol, start=start_date, end=end_date)
+        print(current_data)
+
+        current_labels = current_data._data.axes[1].tolist()
+        nan_ = [float('nan') for i in range(len(current_labels)-1)]
+        nan_.append(current_data['Close'].tolist()[-1])
+
+        nextDays = obj.getNext30Days()
+
+        if current_data['Close'].tolist()[-1] > nextDays[-1]:
+            color = True
+        else:
+            color = False
+
+        context['nextDays'] = nextDays
+        context['nextDays_data'] = nan_ + nextDays
+        context['nextDays_labels'] = current_labels + list(range(1, 21))
+        context['selectedOption'] = company.name
+        context['current_data'] = current_data['Close'].tolist()
+        context['current_labels'] = current_labels
+        context['color'] = color
+
+    return render(request, 'Stock_prediction.html', context=context)
 
 def logout_view(request):
     logout(request)

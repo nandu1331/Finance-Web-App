@@ -1,6 +1,6 @@
 # admin.py
 from django.contrib import admin
-from .models import UserProfile, UploadedFile
+from .models import UserProfile, UploadedFile,Companies
 
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'name', 'surname', 'dob', 'mobile', 'fixed_income', 'variable_income', 'profession', 'insurance', 'savings', 'expenses', 'image')
@@ -17,3 +17,5 @@ class UploadedFileAdmin(admin.ModelAdmin):
     get_user.short_description = 'User'  # This sets the column header in the admin interface
 
 admin.site.register(UploadedFile, UploadedFileAdmin)
+
+admin.site.register(Companies)

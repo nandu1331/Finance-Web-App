@@ -31,5 +31,20 @@ class UploadedFile(models.Model):
             os.remove(self.file.path)
         super().delete(*args, **kwargs)
 
+    
     def __str__(self):
         return f'{self.user_profile.user.username} - {self.file.name}'
+    
+class Companies(models.Model):
+    
+    name = models.CharField(max_length=256, blank=True)
+    symbol = models.CharField(max_length=256, blank=True)
+    industry = models.CharField(max_length=256, blank=True)
+    isinCode = models.CharField(max_length=256, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    @staticmethod
+    def get_company_by_id(pk):
+        return Companies.objects.get(pk=pk)
