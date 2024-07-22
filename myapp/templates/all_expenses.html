@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Expenses</title>
+    <style>
+        body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.return-home-button {
+    background-color: #00aaff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.return-home-button:hover {
+    background-color: #008ecc;
+}
+
+.dropdown-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+#year-select, #month-select {
+    margin: 0 10px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+#year-select:hover, #month-select:hover {
+    border-color: #aaa;
+}
+
+.expenses-items {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 800px;
+}
+
+.expense-date {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin: 20px 0 10px 0;
+}
+
+.expense-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.expense-item:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.expense-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.expense-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.expense-category {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    margin: 0;
+}
+
+.expense-description {
+    font-size: 14px;
+    color: #888;
+    margin: 5px 0 0 0;
+}
+
+.expense-amount {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+}
+
+.no-data-message {
+    text-align: center;
+    font-size: 16px;
+    color: #888;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .expense-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .expense-icon {
+        margin-bottom: 10px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="return-home-button" onclick="window.location.href='/home'">Return to Home</button>
+    </div>
+    <div class="dropdown-container">
+        <select id="year-select">
+            <option value="">Select Year</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+        <select id="month-select">
+            <option value="">Select Month</option>
+            <!-- Options will be populated dynamically -->
+        </select>
+    </div>
+
+    <div class="expenses-items">
+        <!-- Expenses list will be populated dynamically -->
+    </div>
+
+    <div class="no-data-message" style="display: none;">
+        No data available. Please upload your statement.
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const yearSelect = document.getElementById('year-select');
+    const monthSelect = document.getElementById('month-select');
+
+    fetch('/csv-data/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.querySelector('.no-data-message').style.display = 'block';
+                return;
+            }
+
+            const years = data.years;
+            populateYearSelect(years);
+            populateMonthSelect();
+
+            yearSelect.addEventListener('change', function() {
+                const selectedYear = this.value;
+                const selectedMonth = monthSelect.value;
+                updateData(selectedYear, selectedMonth, data);
+            });
+
+            monthSelect.addEventListener('change', function() {
+                const selectedYear = yearSelect.value;
+                const selectedMonth = this.value;
+                updateData(selectedYear, selectedMonth, data);
+            });
+
+            // Populate select options
+            function populateYearSelect(years) {
+                years.forEach(year => {
+                    const option = document.createElement('option');
+                    option.value = year;
+                    option.textContent = year;
+                    yearSelect.appendChild(option);
+                });
+            }
+
+            function populateMonthSelect() {
+                const months = [
+                    'January', 'February', 'March', 'April', 'May', 'June', 
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+                months.forEach((month, index) => {
+                    const option = document.createElement('option');
+                    option.value = index + 1;
+                    option.textContent = month;
+                    monthSelect.appendChild(option);
+                });
+            }
+
+            // Update data based on selected year and month
+            function updateData(year, month, data) {
+                const filteredData = data.data.filter(row => {
+                    const rowDate = new Date(row.date);
+                    const rowYear = rowDate.getFullYear().toString();
+                    const rowMonth = (rowDate.getMonth() + 1).toString();
+                    return (!year || rowYear === year) && (!month || rowMonth === month);
+                });
+
+                updateExpensesList(filteredData);
+            }
+
+            function updateExpensesList(data) {
+                const expensesItems = document.querySelector('.expenses-items');
+                const groupedByDate = data.reduce((acc, row) => {
+                    const date = row.date;
+                    if (!acc[date]) acc[date] = [];
+                    acc[date].push(row);
+                    return acc;
+                }, {});
+
+                const sortedDates = Object.keys(groupedByDate)
+                    .sort((a, b) => new Date(b) - new Date(a));
+
+                let itemsHtml = '';
+                sortedDates.forEach(date => {
+                    const transactions = groupedByDate[date];
+                    itemsHtml += `<h3 class="expense-date">${date}</h3>`;
+                    transactions.forEach(row => {
+                        itemsHtml += `
+                            <div class="expense-item">
+                                <div class="expense-details">
+                                    <h4 class="expense-category">${row.category}</h4>
+                                    <p class="expense-description">${row.description}</p>
+                                </div>
+                                <p class="expense-amount">Rs ${parseFloat(row.amount).toFixed(2)}</p>
+                            </div>
+                        `;
+                    });
+                });
+
+                expensesItems.innerHTML = itemsHtml;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            document.querySelector('.no-data-message').style.display = 'block';
+        });
+});
+
+    </script>
+</body>
+</html>

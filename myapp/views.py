@@ -47,6 +47,7 @@ def signup_view(request):
     
     return render(request, 'signup.html')
 
+@login_required
 def save_google_profile_image(user_profile, image_url):
     response = requests.get(image_url)
     if response.status_code == 200:
@@ -85,7 +86,7 @@ def google_sign_in(request):
 @login_required
 def home_view(request):
     profile, created = UserProfile.objects.get_or_create(user=request.user)
-    print(profile.image.url)
+
     return render(request, 'home.html', {'profile': profile, 'user': request.user })
 
 def dashboard_before_login(request):
@@ -181,6 +182,71 @@ def statement_upload(request):
             return JsonResponse({'success': False, 'error': 'No files uploaded'})
 
     return render(request, 'statement_upload.html')
+
+# views.py
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import get_object_or_404
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from myapp.models import UploadedFile, UserProfile
+import csv
+import os
+import logging
+from collections import defaultdict
+
+# Set up logging
+logger = logging.getLogger(__name__)
+
+@login_required
+def csv_data(request):
+    # Get the current user's profile
+    user_profile = get_object_or_404(UserProfile, user=request.user)
+    
+    # Try to get the associated UploadedFile(s)
+    try:
+        uploaded_files = UploadedFile.objects.filter(user_profile=user_profile)
+        
+        if not uploaded_files.exists():
+            return JsonResponse({'error': 'No CSV files associated with your profile. Please upload one to get analytics.'}, status=404)
+        
+        data = []
+        available_years = set()
+        
+        for uploaded_file in uploaded_files:
+            csv_file_path = os.path.join(settings.MEDIA_ROOT, uploaded_file.file.name)
+            
+            # Check if file exists
+            if not os.path.exists(csv_file_path):
+                logger.error(f"File not found: {csv_file_path}")
+                continue
+            
+            try:
+                with open(csv_file_path, newline='', encoding='utf-8') as csvfile:
+                    reader = csv.DictReader(csvfile)
+                    for row in reader:
+                        data.append(row)
+                        # Extract the year from the date
+                        year = row['date'].split('-')[0]
+                        available_years.add(year)
+            except Exception as e:
+                logger.error(f"Error reading file {csv_file_path}: {e}")
+                continue
+        
+        return JsonResponse({'data': data, 'years': sorted(list(available_years))})
+    
+    except Exception as e:
+        logger.error(f"Error processing CSV data: {e}")
+        return JsonResponse({'error': 'An error occurred while processing your CSV files. Please try again later.'}, status=500)
+
+@login_required
+def all_expenses(request):
+    return render(request, 'all_expenses.html')
+
+@login_required
+def expenses_summary(request):
+    return render(request, 'expenses_summary.html')
+
+
 
 def logout_view(request):
     logout(request)

@@ -1,6 +1,7 @@
 # models.py
 from django.db import models
 from django.contrib.auth.models import User
+import os
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -24,6 +25,11 @@ class UploadedFile(models.Model):
     file = models.FileField(upload_to='uploads/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
     
+    def delete(self, *args, **kwargs):
+        # Delete the file from the filesystem
+        if self.file and os.path.isfile(self.file.path):
+            os.remove(self.file.path)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return f'{self.user_profile.user.username} - {self.file.name}'

@@ -239,7 +239,7 @@
                         <p class="user-status">Profile Details</p>
                     </div>
                 </header>
-                <div class="alert alert-danger" role="alert">{{ message }}</div>
+                <div style="margin: auto;"><h2 style="color: green;">{{ message|title }}</h2></div>
                 <form method="POST" action="{% url 'details_form' %}">
                     {% csrf_token %}
                     <div class="form-section">

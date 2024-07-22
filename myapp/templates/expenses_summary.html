@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Expenses Summary</title>
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #4CAF50;
+}
+
+.header button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.header button:hover {
+    background-color: #45a049;
+}
+
+.select-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    text-align: center;
+}
+.category_select_container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.category_select_container select {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc ;
+    border-radius: 5px;
+}
+
+.category_select_container label {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.select-container select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.chart-container {
+    display: flex;
+    flex-direction: row; /* Arrange charts horizontally */
+    justify-content: space-between; /* Add space between charts */
+    margin: 20px 200px;
+}
+
+.pie-chart, .bar-chart {
+    flex: 1; /* Allow charts to grow and shrink */
+    margin: 0 25px; /* Add space between charts */
+}
+
+.chart-container canvas {
+    width: 100%;
+    height: auto;
+}
+
+.chart-title {
+    font-size: 18px;
+    color: #4CAF50;
+    margin: 20px 0 10px;
+}
+
+.tips-container {
+    margin: 20px auto;
+    max-width: 1200px; /* Adjust based on your layout needs */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Shadow effect for the container */
+}
+
+.tips-container h2 {
+    font-size: 24px;
+    color: #333333;
+    margin: 0 0 20px;
+    text-align: center; /* Center-align the heading */
+}
+
+#tips-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px; /* Space between cards */
+}
+
+#tips-list li {
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    padding: 20px;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect for each card */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+#tips-list li:hover {
+    transform: translateY(-5px); /* Lift the card slightly on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* More prominent shadow on hover */
+}
+
+#tips-list li .tip-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #4CAF50; /* Custom color for the tip header */
+}
+
+#tips-list li .tip-content {
+    color: #555555; /* Custom color for the tip content */
+}
+
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: #777;
+}
+
+.footer a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+/* General responsive adjustments */
+@media (max-width: 1200px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .chart-container {
+        margin: 20px 50px; /* Reduce margin for smaller screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .chart-container {
+        flex-direction: column; /* Stack charts vertically on medium screens */
+        margin: 20px 20px; /* Adjust margin for medium screens */
+    }
+
+    .pie-chart, .bar-chart {
+        margin: 0 0 20px; /* Add bottom margin for vertical stacking */
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column; /* Stack header elements vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    .header h1 {
+        font-size: 20px; /* Adjust font size for smaller screens */
+    }
+
+    .header button {
+        font-size: 14px; /* Adjust font size for buttons */
+        padding: 8px 16px; /* Adjust button padding */
+    }
+
+    .select-container, .category_select_container {
+        flex-direction: column; /* Stack select elements vertically */
+    }
+
+    .category_select_container select, .select-container select {
+        width: 100%; /* Make select elements full width */
+        margin-bottom: 10px; /* Add margin between selects */
+    }
+}
+
+@media (max-width: 576px) {
+    .header h1 {
+        font-size: 18px; /* Further reduce font size */
+    }
+
+    .header button {
+        font-size: 12px; /* Further reduce font size */
+        padding: 6px 12px; /* Further adjust button padding */
+    }
+
+    .chart-title {
+        font-size: 16px; /* Adjust chart title font size */
+    }
+
+    #tips-list li {
+        font-size: 14px; /* Reduce font size in tips */
+        padding: 15px; /* Adjust padding in tips */
+    }
+
+    #tips-list li .tip-header {
+        font-size: 16px; /* Adjust font size of tip header */
+    }
+}
+
+@media (max-width: 400px) {
+    .header h1 {
+        font-size: 16px; /* Smallest font size for header */
+    }
+
+    .header button {
+        font-size: 12px; /* Maintain small font size for buttons */
+        padding: 5px 10px; /* Reduce button padding */
+    }
+
+    .tips-container h2 {
+        font-size: 20px; /* Reduce font size of the container heading */
+    }
+
+    #tips-list li {
+        font-size: 13px; /* Reduce font size in tips further */
+        padding: 10px; /* Further reduce padding */
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Expenses Summary</h1>
+            <button onclick="window.location.href='/home'">Back to Home</button>
+        </div>
+        <div class="select-container">
+            <select id="year-select">
+                <!-- Options will be dynamically populated -->
+            </select>
+        </div>
+        
+        <br>
+        <div class="chart-container">
+            <div>
+                <div class="category_select_container">
+                    <label for="category-select">Select Category:</label>
+                    <select id="category-select">
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                </div>
+                <h2 class="chart-title">Monthly Expenses</h2>
+                <canvas id="barChart"></canvas>
+            </div>
+            <div>
+                <h2 class="chart-title">Category Distribution</h2>
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+        <div class="tips-container">
+            <h2>Financial Tips</h2>
+            <ul id="tips-list">
+                <!-- Tips will be dynamically populated -->
+            </ul>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2024 Your Company. All rights reserved. | <a href="#">Privacy Policy</a></p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    fetch('/csv-data/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error('Error in data:', data.error);
+                return;
+            }
+
+            const years = data.years;
+            populateYearSelect(years);
+
+            const yearSelect = document.getElementById('year-select');
+            yearSelect.addEventListener('change', function() {
+                const selectedYear = this.value;
+                updateCharts(selectedYear, data);
+            });
+
+            const categorySelect = document.getElementById('category-select');
+            categorySelect.addEventListener('change', function() {
+                const selectedCategory = this.value;
+                if (selectedCategory) {
+                    updateBarChartForCategory(selectedCategory, data);
+                }
+            });
+
+            // Set default values and update charts
+            const latestYear = years[years.length - 1];
+            yearSelect.value = latestYear;
+            updateCharts(latestYear, data);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+    const tips = [
+        "Track your spending to identify unnecessary expenses.",
+        "Set a budget and stick to it.",
+        "Save a portion of your income regularly.",
+        "Invest in financial products wisely.",
+        "Avoid unnecessary debts."
+    ];
+
+    const tipsList = document.getElementById('tips-list');
+    tips.forEach(tip => {
+        const li = document.createElement('li');
+        li.textContent = tip;
+        tipsList.appendChild(li);
+    });
+
+    function populateYearSelect(years) {
+        const yearSelect = document.getElementById('year-select');
+        years.forEach(year => {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearSelect.appendChild(option);
+        });
+    }
+
+    function populateCategorySelect(data) {
+        const categories = new Set(data.map(row => row.category)); // Fixed: data should be a flat array
+        const categorySelect = document.getElementById('category-select');
+        categorySelect.innerHTML = ''; // Clear existing options
+
+        categories.forEach(category => {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            categorySelect.appendChild(option);
+        });
+
+        // Optionally, set a default category or handle the case where no categories are available
+        if (categories.size > 0) {
+            categorySelect.value = [...categories][0];
+            updateBarChartForCategory(categorySelect.value, data);
+        }
+    }
+
+    function updateCharts(year, data) {
+        const filteredData = data.data.filter(row => new Date(row.date).getFullYear().toString() === year);
+        const pieData = getCategoryData(filteredData);
+        const barData = getMonthlyData(filteredData);
+
+        updatePieChart(pieData);
+        updateBarChartForMonth(barData, filteredData);
+        populateCategorySelect(filteredData); // Ensure categories are populated with filtered data
+    }
+
+    function getCategoryData(data) {
+        const categoryTotals = {};
+        data.forEach(row => {
+            const category = row.category;
+            const amount = parseFloat(row.amount);
+            if (!categoryTotals[category]) {
+                categoryTotals[category] = 0;
+            }
+            categoryTotals[category] += amount;
+        });
+
+        return {
+            labels: Object.keys(categoryTotals),
+            data: Object.values(categoryTotals)
+        };
+    }
+
+    function getMonthlyData(data) {
+        const monthlyTotals = Array(12).fill(0);
+        data.forEach(row => {
+            const date = new Date(row.date);
+            const month = date.getMonth();
+            const amount = parseFloat(row.amount);
+            monthlyTotals[month] += amount;
+        });
+
+        return {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            data: monthlyTotals
+        };
+    }
+
+    function updatePieChart(data) {
+        const ctxPie = document.getElementById('pieChart').getContext('2d');
+        if (window.myPieChart) {
+            window.myPieChart.destroy();
+        }
+        window.myPieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    data: data.data,
+                    backgroundColor: [
+                        '#ff6384', '#36a2eb', '#cc65fe', '#ffce56',
+                        '#4bc0c0', '#9966ff', '#ff9f40', '#ff6384',
+                        '#36a2eb', '#cc65fe', '#ffce56', '#4bc0c0'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return `Rs ${tooltipItem.raw.toFixed(2)}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    function updateBarChartForMonth(data, filteredData) {
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        if (window.myBarChart) {
+            window.myBarChart.destroy();
+        }
+        window.myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Monthly Expenses',
+                    data: data.data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return `Rs ${tooltipItem.raw.toFixed(2)}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        display: false
+                    },
+                    y: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    function updateBarChartForCategory(category, data) {
+        const filteredData = data.data.filter(row => row.category === category);
+        const monthlyData = getMonthlyData(filteredData);
+        updateBarChartForMonth(monthlyData, filteredData);
+    }
+});
+
+
+    </script>
+</body>
+</html>

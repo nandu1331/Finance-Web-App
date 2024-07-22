@@ -7,6 +7,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.dashboard_before_login, name='dashboard_before_login'),
+    path('csv-data/', views.csv_data, name='csv_data'),
+    path('expenses-summary/', views.expenses_summary, name='expenses_summary'),
+    path('all-expenses/', views.all_expenses, name='all_expenses'),
     path('upload-profile-image/', views.upload_profile_image, name='upload_profile_image'),
     path('statement_upload/', views.statement_upload, name='statement_upload'),
     path('details_form/', views.form_page, name='details_form'),
