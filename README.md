@@ -70,19 +70,20 @@ A comprehensive Django-based web application for managing and analyzing personal
 ### Expense Management
 
 1. **Upload CSV**: Log in and upload your expense CSV file through the dashboard.
-   <img src="https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd" alt="Upload CSV" style="width: 45% height: auto">
+2. 
+   <img src="https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd" alt="Upload CSV" style="width: 45%; height: auto;">
 
-2. **View Expenses**: Navigate to the expenses page to view your transactions.
+3. **View Expenses**: Navigate to the expenses page to view your transactions.
    <div style="display: flex; justify-content: space-around;">
-        <img src="https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3" alt="Image 1" style="width: 45%; height: auto; padding-right: 20px">
+        <img src="https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3" alt="Image 1" style="width: 45%; height: auto; padding-right: 20px;">
         <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Image 2" style="width: 45%; height: auto;">
    </div>
 
 
-3. **Analyze Data**: Use the charts to analyze spending patterns and categories.
+4. **Analyze Data**: Use the charts to analyze spending patterns and categories.
    ![Analyze Data](path_to_analyze_data_image)
 
-4. **Get Tips**: Visit the tips section to receive personalized financial advice.
+5. **Get Tips**: Visit the tips section to receive personalized financial advice.
    ![Get Tips](path_to_get_tips_image)
 
 ### Stock Prediction
