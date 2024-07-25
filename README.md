@@ -23,7 +23,7 @@ A comprehensive Django-based web application for managing and analyzing personal
 ![Dash Board](https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3)
 
 ### Expense Upload
-![Expense Upload](path_to_expense_upload_image)
+![Statement Upload](https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd)
 
 ### Charts and Graphs
 ![Charts and Graphs](path_to_charts_image)
