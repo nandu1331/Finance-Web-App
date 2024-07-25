@@ -2,7 +2,7 @@
 
 ---
 
-# Money-Mate [Financial Advisor and Manager]
+# Money-Mate [Financial Advisor and Management System]
 
 A comprehensive Django-based web application for managing and analyzing personal finances and predicting future stock prices. This application enables users to upload expense CSV files, view detailed expense breakdowns, gain financial insights through dynamic charts and graphs, and predict stock prices using a machine learning model.
 
