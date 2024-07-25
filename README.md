@@ -87,7 +87,7 @@ A comprehensive Django-based web application for managing and analyzing personal
 6. **Get Tips**: Visit the tips section to receive personalized financial advice.
 
 
- <img src="https://github.com/user-attachments/assets/6f0f3374-7a46-487f-afce-a19405bc38ab" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
+    <img src="https://github.com/user-attachments/assets/6f0f3374-7a46-487f-afce-a19405bc38ab" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
    
 
 ### Stock Prediction
