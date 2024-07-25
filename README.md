@@ -76,12 +76,12 @@ A comprehensive Django-based web application for managing and analyzing personal
 3. **View Expenses**: Navigate to the expenses page to view your transactions.
    <div style="display: flex; justify-content: space-around;">
         <img src="https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3" alt="Image 1" style="width: 45%; height: auto; padding-right: 20px;">
-        <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Image 2" style="width: 45%; height: auto;">
+        <img src="https://github.com/user-attachments/assets/0d7ce8bd-2185-41ba-a897-11787007daf4" alt="Image 2" style="width: 45%; height: auto;">
    </div>
 
 
 4. **Analyze Data**: Use the charts to analyze spending patterns and categories.
-   ![Analyze Data](path_to_analyze_data_image)
+   <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Upload CSV" style="width: 45%; height: auto;">
 
 5. **Get Tips**: Visit the tips section to receive personalized financial advice.
    ![Get Tips](path_to_get_tips_image)
