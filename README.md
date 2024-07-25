@@ -20,7 +20,7 @@ A comprehensive Django-based web application for managing and analyzing personal
 ## Screenshots
 
 ### Dashboard
-![Dashboard](path_to_dashboard_image)
+![Dash Board](https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3)
 
 ### Expense Upload
 ![Expense Upload](path_to_expense_upload_image)
