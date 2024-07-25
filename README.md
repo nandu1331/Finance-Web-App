@@ -71,10 +71,10 @@ A comprehensive Django-based web application for managing and analyzing personal
 
 1. **Upload CSV**: Log in and upload your expense CSV file through the dashboard.
 2. 
-   <img src="https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd" alt="Upload CSV" style="width: 45%; height: auto;">
+   <img src="https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
 
 3. **View Expenses**: Navigate to the expenses page to view your transactions.
-   <div style="display: flex; justify-content: space-around;">
+   <div style="display: flex; justify-content: space-around; margin: auto;">
         <img src="https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3" alt="Image 1" style="width: 45%; height: auto; padding-right: 20px;">
         <img src="https://github.com/user-attachments/assets/0d7ce8bd-2185-41ba-a897-11787007daf4" alt="Image 2" style="width: 45%; height: auto;">
    </div>
@@ -82,12 +82,12 @@ A comprehensive Django-based web application for managing and analyzing personal
 
 4. **Analyze Data**: Use the charts to analyze spending patterns and categories.
 5. 
-   <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Upload CSV" style="width: 45%; height: auto;">
+   <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
 
 6. **Get Tips**: Visit the tips section to receive personalized financial advice.
 
 7.
-8. <img src="https://github.com/user-attachments/assets/6f0f3374-7a46-487f-afce-a19405bc38ab" alt="Upload CSV" style="width: 45%; height: auto;">
+8. <img src="https://github.com/user-attachments/assets/6f0f3374-7a46-487f-afce-a19405bc38ab" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
    
 
 ### Stock Prediction
