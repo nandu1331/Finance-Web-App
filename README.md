@@ -70,7 +70,7 @@ A comprehensive Django-based web application for managing and analyzing personal
 ### Expense Management
 
 1. **Upload CSV**: Log in and upload your expense CSV file through the dashboard.
-2. 
+ 
    <img src="https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
 
 3. **View Expenses**: Navigate to the expenses page to view your transactions.
@@ -81,13 +81,13 @@ A comprehensive Django-based web application for managing and analyzing personal
 
 
 4. **Analyze Data**: Use the charts to analyze spending patterns and categories.
-5. 
+ 
    <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
 
 6. **Get Tips**: Visit the tips section to receive personalized financial advice.
 
-7.
-8. <img src="https://github.com/user-attachments/assets/6f0f3374-7a46-487f-afce-a19405bc38ab" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
+
+ <img src="https://github.com/user-attachments/assets/6f0f3374-7a46-487f-afce-a19405bc38ab" alt="Upload CSV" style="width: 45%; height: auto; margin: auto;">
    
 
 ### Stock Prediction
