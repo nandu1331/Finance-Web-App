@@ -26,7 +26,7 @@ A comprehensive Django-based web application for managing and analyzing personal
 ![Statement Upload](https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd)
 
 ### Charts and Graphs
-![Charts and Graphs](path_to_charts_image)
+![Expense Summary with Charts and Graphs](https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c)
 
 ### Stock Prediction
 ![Stock Prediction](path_to_stock_prediction_image)
