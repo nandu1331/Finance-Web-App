@@ -70,7 +70,7 @@ A comprehensive Django-based web application for managing and analyzing personal
 ### Expense Management
 
 1. **Upload CSV**: Log in and upload your expense CSV file through the dashboard.
-   ![Upload CSV](https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd)
+   <img src="https://github.com/user-attachments/assets/6512df1e-d6c0-46aa-8db2-9b681bf636cd" alt="Upload CSV" style="width: 45% height: auto">
 
 2. **View Expenses**: Navigate to the expenses page to view your transactions.
    <div style="display: flex; justify-content: space-around;">
