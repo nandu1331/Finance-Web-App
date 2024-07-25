@@ -74,8 +74,8 @@ A comprehensive Django-based web application for managing and analyzing personal
 
 2. **View Expenses**: Navigate to the expenses page to view your transactions.
    <div style="display: flex; justify-content: space-around;">
-        <img src="https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3" alt="Image 1" style="width: auto%; height: auto;">
-        <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Image 2" style="width: auto%; height: auto;">
+        <img src="https://github.com/user-attachments/assets/7f18b8fd-9c4c-4d44-8efb-325d2b5852e3" alt="Image 1" style="width: 45%; height: auto; padding-right: 20px">
+        <img src="https://github.com/user-attachments/assets/02cd425a-f1ee-4bdb-a365-4bf34951c73c" alt="Image 2" style="width: 45%; height: auto;">
    </div>
 
 
