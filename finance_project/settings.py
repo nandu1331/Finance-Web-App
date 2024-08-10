@@ -23,15 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-za@(&biwgkk!low1j$r8k^f!669q3apagjrj9ymi%l7z(f06@*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 
 # Login and logout redirect URLs
 LOGIN_REDIRECT_URL = '/home'  # Set to your desired redirect URL after login
 LOGOUT_REDIRECT_URL = '/login'  # Set to your desired redirect URL after logout
 
 # Application definition
-SITE_ID = 2
+SITE_ID = 1
 
 INSTALLED_APPS = [
     'django.contrib.sites',

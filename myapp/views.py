@@ -274,7 +274,6 @@ def Stock_prediction(request):
 
 # Fetch historical data for NIFTY index
     data = yf.download(symbol, start=start_date, end=end_date)
-    print(data)
     labels = data._data.axes[1].tolist()
 
     context = {
@@ -292,9 +291,7 @@ def Stock_prediction(request):
 
         pk = request.POST['option']
         company = Companies.get_company_by_id(pk)
-        print(company.name)
 
-        print(company.symbol)
         obj = RunModel(company)
 
         company_symbol = company.symbol  # Replace with company.symbol if company is an object
@@ -305,7 +302,6 @@ def Stock_prediction(request):
 
 # Fetch historical data for the company's stock
         current_data = yf.download(company_symbol, start=start_date, end=end_date)
-        print(current_data)
 
         current_labels = current_data._data.axes[1].tolist()
         nan_ = [float('nan') for i in range(len(current_labels)-1)]
