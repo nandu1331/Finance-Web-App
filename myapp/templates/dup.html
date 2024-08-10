@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+		<!-- Fontawesome -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+		<link rel="shortcut icon" href="" type="image/x-icon">
+
+		<title>Nifty50 Prediction</title>
+	</head>
+	<style type="text/css">
+		html{
+			scroll-behavior: smooth;
+		}
+		
+		/* width */
+		::-webkit-scrollbar {
+			width: 5px;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 5px grey; 
+			border-radius: 10px;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background: #0275d8; 
+			border-radius: 10px;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: rgb(2,100,200); 
+		}
+
+	</style>
+	<header>
+
+		<!-- Navigation Bar -->
+		{% if user.is_authenticated %}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5 shadow-lg fixed-top">
+			<a class="navbar-brand" href="#main"><i class="fa fa-line-chart px-2" aria-hidden="true"></i>Nifty50 Prediction</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav ml-auto">
+					<a class="nav-item nav-link px-4 mx-2 btn" href="#news">News</a>
+					{% if request.path == '/about/' %}
+					<a class="nav-item nav-link px-4 mx-2 btn active" href="#">About</a>
+					{% else %}
+					<a class="nav-item nav-link px-4 mx-2 btn" href="#">About</a>
+					{% endif %}
+					
+				</div>
+			</div>
+		</nav>
+		{% elif request.path == '/' %}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5 shadow-lg fixed-top">
+			<a class="navbar-brand" href="#main"><i class="fa fa-line-chart px-2" aria-hidden="true"></i>Nifty50 Prediction</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav ml-auto">
+					<a class="nav-item nav-link px-4 mx-2 btn" href="#news">News</a>
+					{% if request.path == '/about/' %}
+					<a class="nav-item nav-link px-4 mx-2 btn active" href="#">About</a>
+					{% else %}
+					<a class="nav-item nav-link px-4 mx-2 btn" href="#">About</a>
+					{% endif %}
+					<a class="nav-item px-4 btn btn-primary btn-block rounded-lg" href="{% url 'signupuser' %}">Register</a>
+				</div>
+			</div>
+		</nav>
+		{% else %}
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5 shadow-lg fixed-top">
+			<a class="navbar-brand" href="{% url 'home' %}"><i class="fa fa-line-chart px-2" aria-hidden="true"></i>Nifty50 Prediction</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav ml-auto">
+					{% if request.path == '/about/' %}
+					<a class="nav-item nav-link px-4 mx-2 btn active" href="#">About</a>
+					{% else %}
+					<a class="nav-item nav-link px-4 mx-2 btn" href="#">About</a>
+					{% endif %}
+					<a class="nav-item px-4 btn btn-primary btn-block rounded-lg" href="{% url 'home' %}">&nbsp;Log in&nbsp;&nbsp;</a>
+				</div>
+			</div>
+		</nav>
+		{% endif %}
+
+	</header>
+	<body class="text-light bg-dark">
+
+	<!-- Main Content -->
+    <div class="jumbotron bg-dark mb-0" id="main">
+        <div class="container mt-5">	
+            <!--{% if user.is_authenticated %}-->
+            <div class="row" style="min-height: 70vh;">
+                <div class="col-sm-8 mr-0">
+                    <canvas id="myChart" width="600" height="300"></canvas>
+                    <form action="" method="POST"class="input-group mt-5">
+                        {% csrf_token %}
+                        <select class="custom-select rounded-left bg-dark text-muted border-primary" id="inputGroupSelect01" name="option">
+                            <option value="  ">Choose Company</option>
+                            {%  for company in companies %}
+                            <option value="{{company.id}}">{{company.name}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary" name='submit'>Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-4 ml-0">
+                    
+    <!-- 1 day table
+    +  
+    {% if priceObj %}
+              <p class="text-light">
+                  Prediction for next day
+              </p>
+                  <p class="text-light">Last Close at {{priceObj.end}}: {{priceObj.endPrice}}</p>
+                  <p class="text-light">prediction for {{priceObj.tommorow|date:'Y-m-d'}}:{{priceObj.prediction}} </p>
+                  {% endif %} -->
+    
+                  <!-- 30 days table -->
+                  {% if nextDays %}
+                  <h5 class="text-light m-3">Predcition for next 30 days</h5>
+                  <div class=" overflow-auto" style=" height: calc(70vh - 70px);">
+                      <table class="table table-striped table-dark table-sm parent">
+                          <thead class="bg-dark" style="position: sticky; position: -webkit-sticky; top: 0">
+                              <tr>
+                                  <th scope="col" class="text-center">Day</th>
+                                  <th scope="col" class="text-center">Closing Price</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              {% for price in nextDays %}
+                              <tr class="text-center">
+                                  <th scope="row">{{forloop.counter}}</th>
+                                  <td>{{ price|floatformat:2 }}</td>
+                              </tr>
+                              {% endfor %}
+                          </tbody>
+                      </table>
+                  </div>
+                  {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-8 mr-5">
+                <canvas id="myChart" width="600" height="300"></canvas>
+            </div>
+            <!--{% else %}
+            <div class="row">
+                <div class="col-sm-8 mr-5">
+                    <canvas id="myChart" width="600" height="300"></canvas>
+                </div>
+                <div class="col-sm-3 ml-3 rounded-lg shadow-lg">
+                    <h2 class="fw-light text-center pt-4"><i class="fa fa-line-chart px-2" aria-hidden="true"></i></h2>
+                    <h5 class="fw-light mb-4">Login</h5>
+                    <p class="text-danger text-center">{{ error }}</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <input type="text" class="form-control bg-dark text-white" id="exampleInputEmail1" name="username" placeholder="Username">
+                        </div>
+                        <div class="mb-4">
+                            <input type="password" class="form-control bg-dark text-white" id="exampleInputPassword1" name="password" placeholder="Password">
+                        </div>
+                        <input type="submit" class="btn btn-primary btn-block rounded-lg shadow-sm col" name="login" value="Login">
+                        <div class="text-center py-4">
+                            <a class="text-form py-4" href="{% url 'signupuser' %}">Create account for Predictions</a>	
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% if not user.is_authenticated %}
+        <div class="alert bg-dark text-light font-italic text-center mx-5" role="alert">
+            Please login or register for making predictions.
+        </div>
+        {% endif %}
+    
+    
+        <!-- <div class="col-md-6">
+               
+            <div class="container m-5 border-2 text-light ">
+              {% if priceObj %}
+              <div class="container alert-info ">
+                  <h5>Showing Prediction for :</h5>
+                  <h3>{{selectedOption}}</h3>
+              </div>
+              <h5 class="text-light">
+                  Prediction for next day
+              </h5>
+             1 day table
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="col text-light">Last Close at {{priceObj.end}}</th>
+                  <th class="col text-light">prediction for {{priceObj.tommorow|date:'Y-m-d'}} </th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-light">{{priceObj.endPrice}}</th>
+                  
+                  <td class="text-light">{{priceObj.prediction}}</td>
+                 
+                </tr>
+               
+              </tbody>
+            </table>
+            {% endif %}
+            
+    
+        -->
+    
+        <!-- News Section -->
+        <hr class="bg-secondary" id="news">
+        <section class="pt-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <h3 class="mb-5">Top Stories </h3>
+                    </div>
+                    <div class="col-6 text-right">
+                        <a class="btn btn-primary mb-3 mr-1" href="#carouselExampleIndicators2" role="button" data-slide="prev">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                        <a class="btn btn-primary mb-3 " href="#carouselExampleIndicators2" role="button" data-slide="next">
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="col-12">
+                        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+    
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="row">
+                                        {% for result in news|slice:":8" %}
+                                        <a class="col-md-3" href="https://{{ result.link }}" style="text-decoration: none;">
+                                            <div class="card mb-4 box-shadow bg-dark shadow-lg rounded-lg" style="height:200px">
+                                                <!-- <img class="rounded-top" src="{{ result.img }}" alt="Card image cap"> -->
+                                                <div class="card-body">	
+                                                    {% if result.title|length > 100 %}
+                                                    <p class="card-text text-light">{{ result.title|slice:":100" }}...</p>
+                                                    {% else %}
+                                                    <p class="card-text text-light">{{ result.title|slice:":100" }}</p>
+                                                    {% endif %}
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <small class="text-secondary">{{ result.date }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        {% endfor %} 
+                                    </div>
+                                </div>
+                                {% for i in news_length %}
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        {% for result in i %}
+                                        <a class="col-md-3" href="https://{{ result.link }}" style="text-decoration: none;">
+                                            <div class="card mb-4 box-shadow bg-dark shadow-lg rounded-lg" style="height:200px">
+                                                <!-- <img class="rounded-top" src="{{ result.img }}" alt="Card image cap"> -->
+                                                <div class="card-body">
+                                                    {% if result.title|length > 100 %}
+                                                    <p class="card-text text-light">{{ result.title|slice:":100" }}...</p>
+                                                    {% else %}
+                                                    <p class="card-text text-light">{{ result.title|slice:":100" }}</p>
+                                                    {% endif %}
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <small class="text-secondary">{{ result.date }}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        {% endfor %} 
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var gradient_primary = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient_primary.addColorStop(0, 'rgba(2, 117, 216, 0.3)');   
+            gradient_primary.addColorStop(1, 'rgba(2, 117, 216, 0.001)');
+            var gradient_danger = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient_danger.addColorStop(0, 'rgba(217, 83, 79, 0.3)');   
+            gradient_danger.addColorStop(1, 'rgba(217, 83, 79, 0.001)');
+            var gradient_success = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient_success.addColorStop(0, 'rgba(92, 184, 92, 0.3)');   
+            gradient_success.addColorStop(1, 'rgba(92, 184, 92, 0.001)');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    {% if nextDays %}
+                    labels: [{% for i in nextDays_labels %}'{{ i }}',{% endfor %}],
+                    datasets: [{
+                        label: 
+                        'Past Closing Price',
+                        data: [
+                        {% for i in current_data %}
+                        '{{ i }}',
+                        {% endfor %}
+                        ],
+                        backgroundColor: gradient_primary,
+                        borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        ],
+                        pointBackgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        pointBorderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 
+                        'Predicted Closing Price',
+                        data: [{% for i in nextDays_data %}'{{ i|floatformat:2 }}',{% endfor %}],
+                        {% if color  %}
+                        backgroundColor: gradient_danger,
+                        borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        ],
+                        pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        pointBorderColor: 'rgba(255, 99, 132, 1)',
+                        {% else %}
+                        backgroundColor: gradient_success,
+                        borderColor: [
+                        'rgba(92, 184, 92, 1)',
+                        ],
+                        pointBackgroundColor: 'rgba(92, 184, 92, 0.2)',
+                        pointBorderColor: 'rgba(92, 184, 92, 1)',
+                        {% endif %}
+                        borderWidth: 1
+                    }],
+                    {% else %}
+                    labels: [{% for i in labels %}'{{ i }}',{% endfor %}],
+                    datasets: [{
+                        label: 
+                        'Current Nifty Closing Price',
+                        data: [
+                        {% for i in data %}
+                        '{{ i|floatformat:2 }}',
+                        {% endfor %}
+                        ],
+                        backgroundColor: gradient_primary,
+                        borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        ],
+                        pointBackgroundColor: 'rgba(2, 117, 216, 0.2)',
+                        pointBorderColor: 'rgba(2, 117, 216, 1)',
+                        borderWidth: 1
+                    }],
+                    {% endif %}
+    
+                },
+                options: {
+                    legend: {
+                        position: 'top',
+                        align: 'end',
+                        labels: {
+                            fontColor: '#fff',
+                            
+                        },
+                    },
+                    title: {
+                        display: true,
+                        text: '{{ selectedOption }}',
+                        fontColor: '#fff'
+                    },
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                //display: false,
+                                color: 'rgba(255, 255, 255, 0.2)',
+                            },	
+                            ticks: {
+                                fontColor: '#fff',
+                            }
+                        }],
+                        xAxes: [{
+                            gridLines: {
+                                display: false,
+                                //color: "#42647F",
+                            },
+                            ticks: {
+                                display: false,
+                            }
+                        }]
+                    },
+                    hoverBackgroundColor: 'rgba(54, 162, 235, 5)',
+                }
+            });
+        });
+    </script>
+    
+    
+
+	<!-- Optional JavaScript; choose one of the two! -->
+
+	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+	<!-- Option 2: Separate Popper and Bootstrap JS -->
+	    <!--
+	    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script> -->
+
+
+	    {% block 'script' %}
+	    {% endblock 'script' %}
+	</body>
+	<footer class="bg-secondary text-justify text-lg-start shadow-lg">
+		<!-- Grid container -->
+		<div class="container p-4">
+			<!--Grid row-->
+			<div class="row">
+				<!--Grid column-->
+				<div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+					<small>
+						We does not provide financial advice or personal investment to individuals, or act as personal financial, legal, or instututional investment advisors, or individually advocate the purchase or sale of any security or investment or the use of any particular financial strategies.
+					</small>
+				</div>
+				<!--Grid column-->
+				<!--Grid column-->
+				<div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+					<small>
+						Information is provided 'as-is' and solely for informational purposes and is not advice. We does not bear any responsibility for any losses or damage that may occur as a result of reliance on this data.
+					</small>
+				</div>
+				<!--Grid column-->
+			</div>
+			<!--Grid row-->
+		</div>
+		<!-- Grid container -->
+
+		<!-- Copyright -->
+		<div class="text-center text-light p-3 bg-dark">
+			<i class="fa fa-line-chart fa-lg px-5" aria-hidden="true"></i>
+			© {% now 'Y' %} Copyright:
+			<a class="text-white" href="#">nifty50prediction.com</a>
+		</div>
+		<!-- Copyright -->
+	</footer>
+</html>
+

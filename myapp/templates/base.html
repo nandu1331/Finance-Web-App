@@ -46,61 +46,18 @@
 	<header>
 
 		<!-- Navigation Bar -->
-		{% if user.is_authenticated %}
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5 shadow-lg fixed-top">
-			<a class="navbar-brand" href="#main"><i class="fa fa-line-chart px-2" aria-hidden="true"></i>Nifty50 Prediction</a>
+			<a class="navbar-brand" href="{% url 'Stock_prediction' %}"><i class="fa fa-line-chart px-2" aria-hidden="true"></i>Nifty50 Prediction</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav ml-auto">
 					<a class="nav-item nav-link px-4 mx-2 btn" href="#news">News</a>
-					{% if request.path == '/about/' %}
-					<a class="nav-item nav-link px-4 mx-2 btn active" href="#">About</a>
-					{% else %}
-					<a class="nav-item nav-link px-4 mx-2 btn" href="#">About</a>
-					{% endif %}
-					
+					<a href="{% url 'home' %}" class="nav-item nav-link px-4 mx-2 btn">Home</a>
 				</div>
 			</div>
 		</nav>
-		{% elif request.path == '/' %}
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5 shadow-lg fixed-top">
-			<a class="navbar-brand" href="#main"><i class="fa fa-line-chart px-2" aria-hidden="true"></i>Nifty50 Prediction</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav ml-auto">
-					<a class="nav-item nav-link px-4 mx-2 btn" href="#news">News</a>
-					{% if request.path == '/about/' %}
-					<a class="nav-item nav-link px-4 mx-2 btn active" href="#">About</a>
-					{% else %}
-					<a class="nav-item nav-link px-4 mx-2 btn" href="#">About</a>
-					{% endif %}
-					<a class="nav-item px-4 btn btn-primary btn-block rounded-lg" href="{% url 'signupuser' %}">Register</a>
-				</div>
-			</div>
-		</nav>
-		{% else %}
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5 shadow-lg fixed-top">
-			<a class="navbar-brand" href="{% url 'home' %}"><i class="fa fa-line-chart px-2" aria-hidden="true"></i>Nifty50 Prediction</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-				<div class="navbar-nav ml-auto">
-					{% if request.path == '/about/' %}
-					<a class="nav-item nav-link px-4 mx-2 btn active" href="#">About</a>
-					{% else %}
-					<a class="nav-item nav-link px-4 mx-2 btn" href="#">About</a>
-					{% endif %}
-					<a class="nav-item px-4 btn btn-primary btn-block rounded-lg" href="{% url 'home' %}">&nbsp;Log in&nbsp;&nbsp;</a>
-				</div>
-			</div>
-		</nav>
-		{% endif %}
-
 	</header>
 	<body class="text-light bg-dark">
 
